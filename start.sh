@@ -2,13 +2,16 @@
 #!/bin/sh
 set -eu
 
+echo "Checking Ollama installation..."
+command -v ollama || {
+  echo "ERROR: Ollama executable not found in PATH"
+  echo "PATH=$PATH"
+  ls -la /usr/bin/ollama /bin/ollama /usr/local/bin/ollama 2>/dev/null || true
+  exit 1
+}
+
 ollama serve &
 OLLAMA_PID=$!
-
-cleanup() {
-  kill "$OLLAMA_PID" 2>/dev/null || true
-}
-trap cleanup EXIT INT TERM
 
 until ollama list >/dev/null 2>&1; do
   sleep 2
