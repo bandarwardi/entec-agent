@@ -1,4 +1,5 @@
 
+
 FROM ollama/ollama:latest
 
 ENV OLLAMA_HOST=0.0.0.0:11434
@@ -10,4 +11,4 @@ RUN chmod +x /start.sh
 
 EXPOSE 11434
 
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["/bin/sh", "/start.sh"]
